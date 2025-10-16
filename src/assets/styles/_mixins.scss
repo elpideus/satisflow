@@ -1,0 +1,14 @@
+@mixin rounded {
+  border-radius: .3rem;
+}
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin center-vertical {
+  display: flex;
+  align-items: center;
+}

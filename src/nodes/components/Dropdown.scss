@@ -1,0 +1,124 @@
+@use "sass:color";
+@use "../../assets/styles/variables" as *;
+@use "../../assets/styles/mixins" as *;
+
+.custom-dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+
+  &.short {
+    flex: 0;
+    min-width: 80px; // Adjust as needed for shorter dropdowns
+  }
+
+  label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
+
+  .dropdown-header {
+    background: $bg-dark;
+    border: 1px solid $bg-light;
+    border-radius: 0.3rem;
+    padding: 0 0.8rem;
+    color: $text-white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    height: $buttons-height;
+
+    &:hover {
+      border-color: color.scale($bg-light, $lightness: 20%);
+      background: color.scale($bg-dark, $lightness: 2%);
+    }
+
+    .dropdown-header-content {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s ease;
+      color: rgba(255, 255, 255, 0.6);
+      margin-right: -.2rem;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: $bg-dark;
+    border: 1px solid $bg-light;
+    border-radius: 0.3rem;
+    margin-top: 0.2rem;
+    z-index: 1000;
+    max-height: 40vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    // Allow dropdown to expand to needed width
+    min-width: 100%;
+    width: auto;
+    white-space: nowrap;
+
+    // Scroll prevention for React Flow
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $bg-med;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $bg-light;
+      border-radius: 3px;
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: $bg-light $bg-med;
+  }
+
+  .dropdown-option {
+    padding: 0.6rem 0.8rem;
+    color: $text-white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid $bg-med;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: color.scale($bg-dark, $lightness: 5%);
+    }
+
+    .option-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+  }
+}

@@ -1,0 +1,203 @@
+@use "../../assets/styles/variables" as *;
+@use "../../assets/styles/mixins" as *;
+@use "sass:color";
+
+.overclocking-section {
+  background-color: $bg-med;
+  padding: 1rem;
+  @include rounded;
+  @include center;
+  flex-direction: column;
+  gap: .4rem;
+  color: rgba(255, 255, 255, .6);
+
+  .title {
+    margin: 0;
+    $font-size: 1.2rem;
+    font-size: $font-size;
+    @include center;
+    gap: .2rem;
+
+    .icon {
+      height: $font-size;
+      object-fit: contain;
+    }
+  }
+
+  .preset-buttons {
+    @include center;
+    gap: .4rem;
+    height: $buttons-height;
+
+    button {
+      min-width: 8rem;
+      border: none;
+      outline: none;
+      transition: all 0.2s ease;
+      height: $buttons-height;
+      color: rgba(255, 255, 255, .6);
+
+      &:hover {
+        color: $text-white;
+        transform: translateY(-1px);
+      }
+
+      &:first-child {
+        background: $bg-dark linear-gradient(135deg, rgba($green-med, .5), rgba($green-dark, .5));
+
+        &:hover {
+          background: linear-gradient(135deg, color.scale(rgba($green-med, .5), $lightness: 5%), color.scale(rgba($green-dark, .5), $lightness: 5%));
+        }
+      }
+
+      &:last-child {
+        background: $bg-dark linear-gradient(135deg, rgb($red-med, .5), rgba($red-dark, .5));
+
+        &:hover {
+          background: linear-gradient(135deg, color.scale(rgb($red-med, .5), $lightness: 5%), color.scale(rgba($red-dark, .5), $lightness: 5%));
+        }
+      }
+    }
+  }
+
+  .input-section {
+    @include center;
+    gap: 1rem;
+    height: $buttons-height;
+    position: relative;
+    margin: 0;
+
+    button {
+      height: $buttons-height;
+      color: rgba(255, 255, 255, .6);
+
+      &:hover {
+        color: $text-white;
+      }
+    }
+
+    input {
+      max-width: 4rem;
+      height: $buttons-height;
+      @include rounded;
+      border: none;
+      background-color: $bg-dark;
+      padding: .2rem 1.4rem .2rem .6rem;
+      box-sizing: border-box;
+      text-align: right;
+    }
+
+    &::after {
+      content: '%';
+      position: absolute;
+      margin-right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.6);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+  }
+
+  .slider-section {
+    width: 100%;
+    position: relative;
+    margin: 0;
+
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, rgba($green-med, .5), rgba($yellow-med, .5), rgba($red-med, .5));
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+
+      &::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        background: linear-gradient(90deg, rgba($green-med, .5), rgba($yellow-med, .5), rgba($red-med, .5));
+        border: none;
+      }
+
+      // Thumb styles
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: $text-white;
+        border: 2px solid $bg-light;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+          background: white;
+        }
+      }
+
+      &::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: $text-white;
+        border: 2px solid $bg-light;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+          background: white;
+        }
+      }
+
+      &:focus {
+        outline: none;
+
+        &::-webkit-slider-thumb {
+          border-color: #22c55e;
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        }
+
+        &::-moz-range-thumb {
+          border-color: #22c55e;
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        }
+      }
+    }
+
+    .slider-ticks {
+      position: absolute;
+      top: .8rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+
+      .slider-tick {
+        width: 1px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+
+        // Make every 5th tick larger (50, 100, 150, etc.)
+        &:nth-child(5n) {
+          height: 8px;
+          background: rgba(255, 255, 255, 0.5);
+        }
+
+        // Make the first and last ticks more prominent
+        &:first-child,
+        &:last-child {
+          height: 10px;
+          background: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+  }
+}

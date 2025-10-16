@@ -1,0 +1,481 @@
+@use "sass:color";
+@use "../assets/styles/variables" as *;
+@use "../assets/styles/mixins" as *;
+@use "./components/InfoPopup" as *;
+
+.node {
+  position: relative;
+  background-color: $bg-dark;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  @include rounded;
+  border: 1px solid $bg-light;
+  color: $text-white;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+
+  .handle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+
+    .handles-left {
+      position: absolute;
+      left: -8px;
+      top: 5rem;
+      height: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 16px;
+    }
+
+    .handles-right {
+      position: absolute;
+      right: -8px;
+      top: 5rem;
+      height: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 16px;
+    }
+  }
+
+  .handle-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+
+    &.left-handle {
+      .custom-tooltip {
+        right: 2.5rem;
+        left: auto;
+
+        &::before {
+          right: -6px;
+          left: auto;
+          border-left-color: $bg-light;
+          border-right-color: transparent;
+        }
+      }
+    }
+
+    &.right-handle {
+      .custom-tooltip {
+        left: 2.5rem;
+        right: auto;
+
+        &::before {
+          left: -6px;
+          right: auto;
+          border-right-color: $bg-light;
+          border-left-color: transparent;
+        }
+      }
+    }
+  }
+
+  .custom-tooltip {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: $bg-dark;
+    padding: 0.8rem;
+    border-radius: 0.3rem;
+    border: 1px solid $bg-light;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 3;
+    min-width: 160px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid $bg-light;
+    }
+
+    .tooltip-card {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: $text-white;
+
+      .tooltip-icon {
+        width: 2rem;
+        height: 2rem;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+
+      .tooltip-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+
+        .tooltip-title {
+          font-weight: 600;
+          color: white;
+          font-size: 0.9rem;
+          white-space: nowrap;
+        }
+
+        .tooltip-type {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.7);
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .react-flow__handle {
+    position: relative !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+    pointer-events: all;
+
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    border: 2px solid $bg-light !important;
+    background: linear-gradient(135deg, $bg-med, $bg-dark) !important;
+    box-shadow:
+            0 2px 6px rgba(0, 0, 0, 0.3),
+            inset 0 1px 2px rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: crosshair !important;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $text-white, rgba(255, 255, 255, 0.6));
+      opacity: 0.8;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    &:hover {
+      transform: scale(1.2) !important;
+      border-color: color.scale($bg-light, $lightness: 20%) !important;
+      box-shadow:
+              0 4px 12px rgba(0, 0, 0, 0.4),
+              inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+
+      &::after {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+        background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+      }
+
+      & ~ .custom-tooltip {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
+
+    &:focus, &:focus-visible {
+      outline: none !important;
+      border-color: #22c55e !important;
+      box-shadow:
+              0 0 0 3px rgba(34, 197, 94, 0.3),
+              0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    &.react-flow__handle-connected {
+      border-color: $green-med !important;
+      background: linear-gradient(135deg, rgba($green-med, 0.4), rgba($green-dark, 0.4)) !important;
+
+      &::after {
+        background: linear-gradient(135deg, $green-med, color.scale($green-med, $lightness: 20%));
+        opacity: 0.9;
+      }
+
+      &:hover {
+        border-color: color.scale($green-med, $lightness: 20%) !important;
+
+        &::after {
+          background: linear-gradient(135deg, color.scale($green-med, $lightness: 20%), color.scale($green-med, $lightness: 30%));
+        }
+      }
+    }
+
+    &[data-handletarget="true"] {
+      border-color: $green-med !important;
+
+      &::after {
+        background: linear-gradient(135deg, $green-med, color.scale($green-med, $lightness: 10%));
+      }
+    }
+
+    &[data-handlesource="true"] {
+      border-color: $red-med !important;
+
+      &::after {
+        background: linear-gradient(135deg, $red-med, color.scale($red-med, $lightness: 10%));
+      }
+    }
+
+    &.react-flow__handle-valid {
+      border-color: #22c55e !important;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(21, 128, 61, 0.3)) !important;
+
+      &::after {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+      }
+    }
+
+    &.react-flow__handle-connecting {
+      border-color: $yellow-med !important;
+      animation: pulse 1.5s ease-in-out infinite !important;
+
+      &::after {
+        background: linear-gradient(135deg, $yellow-med, color.scale($yellow-med, $lightness: 10%));
+      }
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow:
+              0 2px 6px rgba(0, 0, 0, 0.3),
+              inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      box-shadow:
+              0 2px 6px rgba(0, 0, 0, 0.3),
+              inset 0 1px 2px rgba(255, 255, 255, 0.1),
+              0 0 0 6px rgba(153, 153, 0, 0.3);
+    }
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    @include center;
+  }
+
+  button {
+    background-color: $bg-dark;
+    border: none;
+    outline: none;
+    @include rounded;
+    @include center;
+
+    &:hover,&:focus,&:focus-visible {
+      border: none;
+      outline: none;
+    }
+
+    &:hover {
+      background-color: color.scale($bg-dark, $lightness: 2%);
+    }
+  }
+
+  .inputs-section {
+    background-color: $bg-med;
+    padding: 1rem;
+    @include rounded;
+    display: flex;
+    gap: .4rem;
+  }
+
+  .custom-dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+
+    &.short {
+      flex: 0;
+    }
+
+    img {
+      height: $buttons-height;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 600;
+    }
+
+    .dropdown-header {
+      background: $bg-dark;
+      border: 1px solid $bg-light;
+      border-radius: 0.3rem;
+      padding: 0 0.8rem;
+      color: $text-white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      height: $buttons-height;
+
+      &:hover {
+        border-color: color.scale($bg-light, $lightness: 20%);
+        background: color.scale($bg-dark, $lightness: 2%);
+      }
+
+      .dropdown-header-content {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .dropdown-arrow {
+        font-size: 0.7rem;
+        transition: transform 0.2s ease;
+        color: rgba(255, 255, 255, 0.6);
+        margin-right: -.2rem;
+
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .dropdown-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: $bg-dark;
+      border: 1px solid $bg-light;
+      border-radius: 0.3rem;
+      margin-top: 0.2rem;
+      z-index: 1000;
+      max-height: 40vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+      min-width: 100%;
+      width: auto;
+      white-space: nowrap;
+
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $bg-med;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $bg-light;
+        border-radius: 3px;
+      }
+
+      scrollbar-width: thin;
+      scrollbar-color: $bg-light $bg-med;
+    }
+
+    .dropdown-option {
+      padding: 0.6rem 0.8rem;
+      color: $text-white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid $bg-med;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background: color.scale($bg-dark, $lightness: 5%);
+      }
+
+      .option-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .node {
+    position: relative;
+    z-index: 1;
+  }
+
+  .power-indicator {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    @include center-vertical;
+  }
+}
+
+.node.custom-title-active {
+  min-height: 280px;
+}
+
+.custom-title-input {
+  margin-bottom: 1rem;
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    background: $bg-med;
+    border: 1px solid $bg-light;
+    border-radius: 0.3rem;
+    color: $text-white;
+    font-size: 1.2rem;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $green-med;
+    }
+  }
+}
+
+.title-section {
+  margin-bottom: 1rem;
+
+  .title {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      color: color.scale($text-white, $lightness: 20%);
+    }
+  }
+}
+

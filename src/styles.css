@@ -1,0 +1,104 @@
+/* General React Flow Node Overrides for Dark Mode */
+.react-flow__node {
+    border: 1px solid #555 !important;
+    border-radius: 8px;
+    background: #333 !important;
+    color: #eee !important;
+    padding: 0 !important;
+    font-family: sans-serif;
+    min-width: 280px;
+}
+
+/* Base Handle Styling */
+.react-flow__handle {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #111;
+    border-radius: 3px;
+}
+.react-flow__handle.target {
+    background: #2196F3; /* Blue for fluid input (Water) */
+}
+.react-flow__handle.source {
+    background: #4CAF50; /* Green for solid output (Ore/Coal) */
+}
+.react-flow__handle[id="fuel_input"] {
+    background: #FF9800; /* Orange for fuel input */
+}
+.react-flow__handle[id="water_input"] {
+    background: #2196F3; /* Blue for water input */
+}
+
+/* Utility Class to prevent node dragging when interacting with form elements */
+.nodrag {
+    touch-action: none;
+}
+
+/* Custom Title and Header Styling */
+.node-header-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    width: 90%;
+    padding: 2px 5px;
+}
+.node-body {
+    padding: 10px;
+}
+.node-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.node-label {
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+/* Overclock Control Styling */
+.overclock-input-group {
+    display: flex;
+    align-items: center;
+}
+.overclock-input-group input[type="number"] {
+    width: 60px;
+    margin: 0 5px;
+    background: #444;
+    border: 1px solid #555;
+    color: #eee;
+    padding: 4px;
+    border-radius: 3px;
+    text-align: right;
+}
+.overclock-input-group input[type="range"] {
+    flex-grow: 1;
+    margin: 0 5px;
+}
+.overclock-input-group button {
+    background: #555;
+    color: #eee;
+    border: 1px solid #777;
+    border-radius: 3px;
+    padding: 3px 0;
+}
+
+/* Generator Status Indicator */
+.generator-status {
+    padding: 5px 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+.generator-starved {
+    background: #F44336; /* Red */
+}
+.generator-producing {
+    background: #4CAF50; /* Green */
+}

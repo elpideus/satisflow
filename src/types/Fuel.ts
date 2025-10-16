@@ -1,0 +1,1 @@
+export type CoalGeneratorFuel = "Coal" | "Compacted Coal" | "Petroleum Coke";

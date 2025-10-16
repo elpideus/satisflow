@@ -1,0 +1,54 @@
+@use "../../assets/styles/variables" as *;
+@use "../../assets/styles/mixins" as *;
+
+.node {
+  .building-icon {
+    position: absolute;
+    top: -3rem;
+    left: -3rem;
+    width: 6rem;
+    height: 6rem;
+    background: linear-gradient(135deg, $bg-med, $bg-dark);
+    border-radius: 50%;
+    @include center;
+    border: 2px solid $bg-light;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    cursor: pointer;
+    transition: all .3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, $bg-light, $bg-med);
+      width: 8rem;
+      height: 8rem;
+      top: -4rem;
+      left: -4rem;
+
+      img {
+        width: 10rem;
+        height: 10rem;
+      }
+    }
+
+    &.open {
+      scale: 3;
+      background: linear-gradient(135deg, $bg-med, $bg-dark);
+      border: 2px solid $bg-light;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        background: linear-gradient(135deg, $bg-light, $bg-med);
+        border: 2px solid $bg-light;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        scale: 2;
+      }
+    }
+
+    img {
+      width: 6rem;
+      height: 6rem;
+      object-fit: contain;
+      transition: all .3s ease;
+    }
+  }
+}
